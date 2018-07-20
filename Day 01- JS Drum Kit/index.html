@@ -58,7 +58,23 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown',function(e){ // add keydown event listener
+    var keyCode = e.keyCode;  //get keyCode
+    var elements = document.querySelectorAll('[data-key="'+keyCode+'"]'); // getting audio and div elements associated with keyCode 
+    if(elements.length==2){ // check for valid data keys
 
+      var divNode = elements[0];  
+      divNode.classList.add('playing'); // add class playing to highlight pressed key
+
+      setTimeout(function(){
+        divNode.classList.remove('playing');    // remove playing class after 0.3 sec
+      },300)
+
+      var audio = elements[1];
+      audio.play(); // play audio
+      
+    }
+  })
 </script>
 
 
