@@ -62,12 +62,43 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: right;  /* rotate axis : right side*/
+      transition: transform 50ms cubic-bezier(0.1, 2.7, 0.58, 1) 0s;  /* get ticking effect*/
     }
 
   </style>
 
   <script>
+  /* select divs */
+  var secondHand = document.querySelector('.second-hand'); 
+  var minuteHand = document.querySelector('.min-hand');
+  var hourHand = document.querySelector('.hour-hand');
 
+  function setClock(){
+    // get time and store it in variables
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+
+    /*
+      calculate angles 
+      initially angle are -90 deg from 12 O' clock
+      offset is 90 deg 
+      so we add 90 to each angle position
+    */
+    var secondAngle = second*6+90;
+    var minuteAngle = minute*6+second/10+90;
+    var hourAngle = hour*30+minute/2+90;
+
+    /* apply rotation */
+    secondHand.setAttribute("style","transform:rotate("+secondAngle+"deg)");
+    minuteHand.setAttribute("style","transform:rotate("+minuteAngle+"deg)");
+    hourHand.setAttribute("style","transform:rotate("+hourAngle+"deg)");
+
+  }
+  setClock(); // set clock positon initially
+  setInterval(setClock,1000);
 
   </script>
 </body>
