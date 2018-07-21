@@ -18,7 +18,7 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" id="image">
 
   <style>
 
@@ -42,9 +42,40 @@
     input {
       width:100px;
     }
+
+    /* defining our CSS variables */
+    :root{
+      --spacing: 10px;
+      --base-color: #ffc600;
+      --blur:10px;
+    }
+    /* adding styles with css variables */
+    img{
+      background-color: var(--base-color);
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+    }
+    .hl{
+      color: var(--base-color);
+    }
   </style>
 
   <script>
+
+    // change spacing CSS variable
+    document.querySelector("#spacing").addEventListener('input',function(e){
+      document.documentElement.style.setProperty("--spacing",e.target.value+e.target.getAttribute('data-sizing'));
+    });
+
+    // change background color CSS variable
+    document.querySelector("#base").addEventListener('input',function(e){
+      document.documentElement.style.setProperty("--base-color",e.target.value);
+    });
+
+    // change blur CSS variable
+    document.querySelector("#blur").addEventListener('input',function(e){
+      document.documentElement.style.setProperty('--blur',e.target.value+e.target.getAttribute('data-sizing'));
+    });
   </script>
 
 </body>
