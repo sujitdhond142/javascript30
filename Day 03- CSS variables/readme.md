@@ -1,4 +1,4 @@
-## Day 02 - Change CSS variables with JS
+## Day 03 - Change CSS variables with JS
 
 ### Easily change CSS variable with javascript.
 
