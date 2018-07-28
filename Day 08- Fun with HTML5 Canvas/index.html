@@ -7,6 +7,64 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  // get canvas and set canvas width and height
+  const canvas = document.querySelector('#draw');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // configure canvas context
+  const ctx = canvas.getContext('2d');
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 100;
+
+  // global variables for canvas drawing
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+  let direction = true;
+
+  function draw(e){
+    // when mouse is not down or mouse is out then return
+    if(!isDrawing) return;
+
+    // draw a line on canvas
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(e.offsetX,e.offsetY);
+    ctx.strokeStyle = `hsl(${hue},100%,50%)`;
+    ctx.stroke();
+
+    // change line width of line according to direction (+/-)
+    if(ctx.lineWidth >= 100 || ctx.lineWidth<=1){
+      direction=!direction;
+    }
+    if(direction){
+      ctx.lineWidth++;
+    }else{
+      ctx.lineWidth--;
+    }
+
+    // change hue of stroke
+    if(hue>=360){
+      hue=0;
+    }
+    hue++;
+
+    // set lastX and lastY position to offset position
+    [ lastX, lastY ] = [ e.offsetX, e.offsetY ];
+  }
+
+  // event listeners along their functions
+  canvas.addEventListener('mousedown', (e) => { 
+    isDrawing=true;
+    [ lastX, lastY ] = [ e.offsetX, e.offsetY ];
+  });
+  canvas.addEventListener('mousemove',draw);
+  canvas.addEventListener('mouseup', () => isDrawing=false);
+  canvas.addEventListener('mouseout', () => isDrawing=false);
+
 </script>
 
 <style>
